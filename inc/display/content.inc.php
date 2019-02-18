@@ -3,6 +3,7 @@
 require __DIR__ . "/../db/mysqli_connect.inc.php";
 require __DIR__ . "/../functions/functions.inc.php";
 
+// Change $orderby variable for default ordering of display page
 $orderby = 'last_name';
 $filter = '';
 
@@ -18,10 +19,11 @@ if (isset($_GET['clearfilter'])){
     $filter = '';
 }
 
+// Search bar pulling from SQL database. Change WHERE '__' for default ordering of searched results
 $sql = "SELECT * FROM $db_table WHERE last_name LIKE '$filter%' ORDER BY $orderby ASC";
 
 $result = $db->query($sql);
-
+// Iterates through SQL database starting from row 0 on
 if ($result->num_rows == 0) {
     echo "<h2 class=\"mt-4 alert alert-warning\">No Records for <strong>last names</strong> starting with <strong>$filter</strong></h2>";
 } else {

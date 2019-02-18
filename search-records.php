@@ -1,6 +1,7 @@
 <?php // Filename: search-records.php
 
 $pageTitle = "Search Records";
+// Required header that's put on the top of each displayable page's code
 require 'inc/layout/header.inc.php';
 require 'inc/db/mysqli_connect.inc.php';
 require 'inc/functions/functions.inc.php';
@@ -11,6 +12,7 @@ require 'inc/app/config.inc.php';
     <div class="row">
         <div class="col-lg-12 mt-4">
         <?php 
+            // User input into search bar
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 if(!empty($_POST['search'])){
                     $sql = "SELECT * FROM $db_table WHERE " . '"' . $_POST["search"] . '"' . " IN (student_id, first_name, last_name, email, phone) ORDER BY last_name ASC";
@@ -23,6 +25,7 @@ require 'inc/app/config.inc.php';
                         echo "<p class=\"display-4 mt-4 text-center\">Please try again.</p>";
                         // echo "<h2 class=\"mt-4\">There are currently no records to display for <strong>last names</strong> starting with <strong>$filter</strong></h2>";
                     } else {
+                        // Repeats successful search results based on how many times the SQL function num_rows is called
                         echo "<h2 class=\"mt-4 text-center\">$result->num_rows record(s) found for \"" . $_POST['search'] . '"</h2>';
                         display_record_table($result);
                     }
@@ -35,5 +38,5 @@ require 'inc/app/config.inc.php';
         </div>
     </div>
 </div>
-
+<!--Required footer that's put on the bottom of each displayable page's code-->
 <?php require 'inc/layout/footer.inc.php';?>

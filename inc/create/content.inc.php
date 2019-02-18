@@ -9,7 +9,7 @@ $error_bucket = [];
 // http://php.net/manual/en/mysqli.real-escape-string.php
 
 if($_SERVER['REQUEST_METHOD']=="POST"){
-    // First insure that all required fields are filled in
+    // First ensure that all required fields are filled in
     if (empty($_POST['first'])) {
         array_push($error_bucket,"<p>A first name is required.</p>");
     } else {
@@ -53,20 +53,24 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         // echo $sql;
 
         $result = $db->query($sql);
+        // Unique entry 'Student ID' duplicated -> fails
         if (!$result) {
             echo '<div class="alert alert-danger" role="alert">
             I am sorry, but I could not save that record for you. ' .  
             $db->error . '.</div>';
+        // Creation success
         } else {
             echo '<div class="alert alert-success" role="alert">
             I saved that new record for you!
           </div>';
-            unset($first);
+          // Unset all creation fields after submission success 
+          unset($first);
             unset($last);
             unset($id);
             unset($email);
             unset($phone);
         }
+    // $error_bucket display submission errors from functions.inc.php
     } else {
         display_error_bucket($error_bucket);
     }
